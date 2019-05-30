@@ -1,0 +1,16 @@
+{
+  "name": "circuit-hr-bot",
+  "version": "1.0.0",
+  "description": "A bot using dialogflow to respond to questions using a circuit bot",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Richard Fazzio <richard.fazzio@atos.net>",
+  "license": "ISC",
+  "dependencies": {
+    "circuit-sdk": "^1.2.5603",
+    "dialogflow": "^0.9.1",
+    "uuid": "^3.3.2"
+  }
+}

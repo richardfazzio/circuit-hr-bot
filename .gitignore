@@ -1,0 +1,7 @@
+
+# Google Api secret and other credentials
+secret.json
+.vscode
+
+# node modules
+node_modules
