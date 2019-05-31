@@ -54,7 +54,7 @@ const addEventListeners = () => {
     });
 }
 
-
+// Replace the span span tags for mention events
 Circuit.Injectors.itemInjector = (item) => {  
     if (item.type === 'TEXT') {
     item.text.content = item.text.content.replace(/(<([^>]+)>)/ig, '');  
