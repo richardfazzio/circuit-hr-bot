@@ -1,9 +1,9 @@
 
 # Google Api secret and other credentials
+app.yaml
 circuit-hr-dialogflow.json
 secret.json
 .vscode
-app.yaml
 
 # node modules
 node_modules
