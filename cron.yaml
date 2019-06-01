@@ -1,0 +1,4 @@
+cron: 
+- description: "Ping server"
+  url: /tasks/summary
+  schedule: every 10 mins
