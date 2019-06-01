@@ -13,9 +13,6 @@ app.get('/_ah/start', async (req, res) => {
     res.sendStatus(200);
 });
   
-// Add dialogFlow as middleware
-app.use(bodyParser.json(), app);
-
 // Start server
 app.listen(process.env.PORT || 8080, () => console.log(`Server started`));
 // Create a dialogflaw client
