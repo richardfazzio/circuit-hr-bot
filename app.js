@@ -1,20 +1,20 @@
 const dialogflow = require('dialogflow');
 const Circuit = require('circuit-sdk');
 const uuid = require('uuid/v1');
-const express = require('express');
+// const express = require('express');
 const { DIALOG_FLOW_SECRET, DIALOG_FLOW_EMAIL, DIALOG_FLOW_PROJECT_ID, CIRCUIT_CLIENT_ID, CIRCUIT_CLIENT_SECRET, LANGUAGE, SCOPES, DOMAIN } = process.env; // Get needed credentials
 let bot; // The bot that will post messages
 
-const app = express();
+// const app = express();
 
-app.get('/_ah/start', async (req, res) => {
-    console.log('handle _ah/start');
-    !bot && await init();
-    res.sendStatus(200);
-});
+// app.get('/_ah/start', async (req, res) => {
+//     console.log('handle _ah/start');
+//     !bot && await init();
+//     res.sendStatus(200);
+// });
   
-// Start server
-app.listen(process.env.PORT || 8080, () => console.log(`Server started`));
+// // Start server
+// app.listen(process.env.PORT || 8080, () => console.log(`Server started`));
 // Create a dialogflaw client
 const sessionClient = new dialogflow.SessionsClient({
     private_key: DIALOG_FLOW_SECRET,
@@ -67,13 +67,9 @@ const addEventListeners = () => {
 }
 
 const init = async () => {
-    try {
-        bot = await client.logon();
-        addEventListeners();
-        console.log('Bot listening...');
-    } catch (err) {
-        console.error(err);
-    }
+    bot = await client.logon();
+    addEventListeners();
+    console.log('Bot listening...');
 };
 
 // Replace the span span tags for mention events
@@ -87,6 +83,6 @@ Circuit.Injectors.itemInjector = (item) => {
     try {
         !bot && await init();
     } catch (err) {
-        
+        console.error(err);
     }
 })();
