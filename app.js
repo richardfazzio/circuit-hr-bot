@@ -9,7 +9,15 @@ const app = express()
 
 app.get('/_ah/start', (req, res) => {
     console.log('handle _ah/start');
-    res.sendStatus(200);
+    try {
+        bot = await client.logon();
+        addEventListeners();
+        console.log('Bot listening...');
+        res.sendStatus(200);
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
 });
 
 app.listen(process.env.PORT || 8080, () => console.log(`Server started`));
@@ -69,13 +77,3 @@ Circuit.Injectors.itemInjector = (item) => {
     if (item.type === 'TEXT') {
     item.text.content = item.text.content.replace(/(<([^>]+)>)/ig, '');  
 }};
-
-(async () => {
-    try {
-        bot = await client.logon();
-        addEventListeners();
-        console.log('Bot listening...');
-    } catch (err) {
-        console.error(err);
-    }
-})();
