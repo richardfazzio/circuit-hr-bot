@@ -7,7 +7,7 @@ let bot; // The bot that will post messages
 
 const app = express()
 
-app.get('/_ah/start', (req, res) => {
+app.get('/_ah/start', async (req, res) => {
     console.log('handle _ah/start');
     try {
         bot = await client.logon();
