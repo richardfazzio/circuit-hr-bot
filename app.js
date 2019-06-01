@@ -2,7 +2,7 @@ const dialogflow = require('dialogflow');
 const Circuit = require('circuit-sdk');
 const uuid = require('uuid/v1');
 const express = require('express');
-const { DIALOG_FLOW_SECRET, DIALOG_FLOW_EMAIL, DIALOG_FLOW_PROJECT_ID, CIRCUIT_CLIENT_ID, CIRCUIT_CLIENT_SECRET, LANGUAGE, SCOPES } = process.env; // Get needed credentials
+const { DIALOG_FLOW_SECRET, DIALOG_FLOW_EMAIL, DIALOG_FLOW_PROJECT_ID, CIRCUIT_CLIENT_ID, CIRCUIT_CLIENT_SECRET, LANGUAGE, SCOPES, DOMAIN } = process.env; // Get needed credentials
 let bot; // The bot that will post messages
 
 const app = express();
@@ -28,7 +28,8 @@ const sessionPath = sessionClient.sessionPath(DIALOG_FLOW_PROJECT_ID, uuid());
 const client = Circuit.Client({
     client_id: CIRCUIT_CLIENT_ID,
     client_secret: CIRCUIT_CLIENT_SECRET,
-    scope: SCOPES
+    scope: SCOPES,
+    domain: DOMAIN
 });
 
 // Circuit functions
@@ -65,13 +66,6 @@ const addEventListeners = () => {
     });
 }
 
-// Replace the span span tags for mention events
-Circuit.Injectors.itemInjector = (item) => {  
-    if (item.type === 'TEXT') {
-    item.text.content = item.text.content.replace(/(<([^>]+)>)/ig, '');  
-}};
-
-
 const init = async () => {
     try {
         bot = await client.logon();
@@ -82,6 +76,17 @@ const init = async () => {
     }
 };
 
+// Replace the span span tags for mention events
+Circuit.Injectors.itemInjector = (item) => {  
+    if (item.type === 'TEXT') {
+    item.text.content = item.text.content.replace(/(<([^>]+)>)/ig, '');  
+}};
+
+
 (async () => {
-    !bot && await init();
+    try {
+        !bot && await init();
+    } catch (err) {
+        
+    }
 })();
