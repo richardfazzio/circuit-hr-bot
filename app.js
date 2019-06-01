@@ -1,9 +1,23 @@
 const dialogflow = require('dialogflow');
 const Circuit = require('circuit-sdk');
 const uuid = require('uuid/v1');
+const express = require('express');
 const { DIALOG_FLOW_SECRET, DIALOG_FLOW_EMAIL, DIALOG_FLOW_PROJECT_ID, CIRCUIT_CLIENT_ID, CIRCUIT_CLIENT_SECRET, LANGUAGE, SCOPES } = process.env; // Get needed credentials
 let bot; // The bot that will post messages
 
+const app = express();
+
+app.get('/_ah/start', async (req, res) => {
+    console.log('handle _ah/start');
+    !bot && await init();
+    res.sendStatus(200);
+});
+  
+// Add dialogFlow as middleware
+app.use(bodyParser.json(), app);
+
+// Start server
+app.listen(process.env.PORT || 8080, () => console.log(`Server started`));
 // Create a dialogflaw client
 const sessionClient = new dialogflow.SessionsClient({
     private_key: DIALOG_FLOW_SECRET,
@@ -60,7 +74,8 @@ Circuit.Injectors.itemInjector = (item) => {
     item.text.content = item.text.content.replace(/(<([^>]+)>)/ig, '');  
 }};
 
-(async () => {
+
+const init = async () => {
     try {
         bot = await client.logon();
         addEventListeners();
@@ -68,4 +83,8 @@ Circuit.Injectors.itemInjector = (item) => {
     } catch (err) {
         console.error(err);
     }
+};
+
+(async () => {
+    !bot && await init();
 })();
