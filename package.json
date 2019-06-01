@@ -11,6 +11,7 @@
   "dependencies": {
     "circuit-sdk": "^1.2.5603",
     "dialogflow": "^0.9.1",
+    "express": "^4.17.1",
     "uuid": "^3.3.2"
   }
 }

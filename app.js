@@ -1,8 +1,16 @@
 const dialogflow = require('dialogflow');
 const Circuit = require('circuit-sdk');
 const uuid = require('uuid/v1');
+const express = require('express');
 const { DIALOG_FLOW_SECRET, DIALOG_FLOW_EMAIL, DIALOG_FLOW_PROJECT_ID, CIRCUIT_CLIENT_ID, CIRCUIT_CLIENT_SECRET, LANGUAGE, SCOPES } = process.env; // Get needed credentials
 let bot; // The bot that will post messages
+
+const app = express()
+
+app.get('/_ah/start', (req, res) => {
+    console.log('handle _ah/start');
+    res.sendStatus(200);
+});
 
 // Create a dialogflaw client
 const sessionClient = new dialogflow.SessionsClient({
